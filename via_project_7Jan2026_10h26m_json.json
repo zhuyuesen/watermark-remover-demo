@@ -1,0 +1,169 @@
+{
+  "215558000_19.jpg86477": {
+    "filename": "215558000_19.jpg",
+    "size": 86477,
+    "regions": [
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 893,
+          "y": 518,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 610,
+          "y": 518,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 331,
+          "y": 517,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 47,
+          "y": 520,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 894,
+          "y": 358,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 611,
+          "y": 357,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 327,
+          "y": 355,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 47,
+          "y": 355,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 893,
+          "y": 199,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 610,
+          "y": 198,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 329,
+          "y": 191,
+          "width": 71,
+          "height": 44
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 46,
+          "y": 197,
+          "width": 71,
+          "height": 47
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 891,
+          "y": 40,
+          "width": 71,
+          "height": 44
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 612,
+          "y": 40,
+          "width": 71,
+          "height": 44
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 330,
+          "y": 40,
+          "width": 71,
+          "height": 44
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 46,
+          "y": 41,
+          "width": 71,
+          "height": 44
+        },
+        "region_attributes": {}
+      }
+    ],
+    "file_attributes": {}
+  }
+}
