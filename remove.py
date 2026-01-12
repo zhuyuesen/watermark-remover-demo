@@ -33,7 +33,7 @@ def detect_watermark_auto(image_path):
   """
   自动检测水印位置（改进版：检测亮色和暗色水印）
   """
-  img = cv2.imread(str(image_path))
+  img = cv2_imread_chinese(str(image_path))
   if img is None:
     print(f"❌ 无法读取图片: {image_path}")
     return None
@@ -60,17 +60,32 @@ def detect_watermark_auto(image_path):
 
   return mask
 
+def cv2_imread_chinese(file_path):
+  """
+  支持中文路径的 cv2.imread 替代方案
+  """
+  try:
+    # 使用 numpy 和 PIL 读取，避免中文路径问题
+    img_pil = Image.open(file_path).convert('RGB')
+    # PIL 使用 RGB，OpenCV 使用 BGR，需要转换
+    img_array = np.array(img_pil)
+    img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+    return img_bgr
+  except Exception as e:
+    print(f"❌ 读取图片失败: {file_path}, 错误: {e}")
+    return None
+
 def detect_watermark_by_fixed_positions(image_path, template_path):
   """
   使用固定位置检测水印（适用于水印位置完全一致的情况）
   先用模板匹配找出所有水印位置，然后保存这些位置供后续使用
   """
-  img = cv2.imread(str(image_path))
+  img = cv2_imread_chinese(str(image_path))
   if img is None:
     print(f"❌ 无法读取图片: {image_path}")
     return None
 
-  template = cv2.imread(str(template_path))
+  template = cv2_imread_chinese(str(template_path))
   if template is None:
     print(f"❌ 模板文件不存在: {template_path}")
     return None
@@ -358,53 +373,68 @@ def batch_process(use_template=False):
     # 创建输出目录
     output_path.mkdir(exist_ok=True)
 
-    # 找出所有 jpg 和 png 图片（包括一层子文件夹）
-    images = []
+    # 边扫描边处理，显示实时进度
+    print("🔍 开始扫描并处理图片文件...\n")
 
-    # 方式1: 直接在根目录的图片
-    images.extend(input_path.glob('*.jpg'))
-    images.extend(input_path.glob('*.png'))
-    images.extend(input_path.glob('*.jpeg'))
+    success_count = 0
+    processed_count = 0
+    failed_count = 0
 
-    # 方式2: 一层子文件夹中的图片
-    images.extend(input_path.glob('*/*.jpg'))
-    images.extend(input_path.glob('*/*.png'))
-    images.extend(input_path.glob('*/*.jpeg'))
+    # 定义图片扩展名
+    image_extensions = ['*.jpg', '*.jpeg', '*.png']
 
-    total = len(images)
+    # 处理根目录的图片
+    for ext in image_extensions:
+        for img_file in input_path.glob(ext):
+            processed_count += 1
+            relative_path = img_file.relative_to(input_path)
+            print(f"[{processed_count}] 处理: {relative_path}")
 
-    if total == 0:
+            # 输出文件保持相同的文件夹结构
+            output_file = output_path / relative_path
+
+            # 创建子文件夹（如果需要）
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+
+            # 去水印
+            if remove_watermark(model, img_file, output_file, use_template):
+                success_count += 1
+                print(f"✅ 完成\n")
+            else:
+                failed_count += 1
+                print(f"❌ 失败\n")
+
+    # 处理一层子文件夹中的图片
+    for ext in image_extensions:
+        for img_file in input_path.glob(f'*/{ext}'):
+            processed_count += 1
+            relative_path = img_file.relative_to(input_path)
+            print(f"[{processed_count}] 处理: {relative_path}")
+
+            # 输出文件保持相同的文件夹结构
+            output_file = output_path / relative_path
+
+            # 创建子文件夹（如果需要）
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+
+            # 去水印
+            if remove_watermark(model, img_file, output_file, use_template):
+                success_count += 1
+                print(f"✅ 完成\n")
+            else:
+                failed_count += 1
+                print(f"❌ 失败\n")
+
+    # 4. 统计结果
+    if processed_count == 0:
         print(f"❌ 在 {INPUT_FOLDER} 中没有找到图片")
         return
 
-    print(f"📊 找到 {total} 张图片\n")
-
-    # 3. 逐张处理
-    success_count = 0
-
-    for idx, img_file in enumerate(images, 1):
-        # 计算相对路径，保持文件夹结构
-        relative_path = img_file.relative_to(input_path)
-        print(f"[{idx}/{total}] 处理: {relative_path}")
-
-        # 输出文件保持相同的文件夹结构
-        output_file = output_path / relative_path
-
-        # 创建子文件夹（如果需要）
-        output_file.parent.mkdir(parents=True, exist_ok=True)
-
-        # 去水印
-        if remove_watermark(model, img_file, output_file, use_template):
-            success_count += 1
-            print(f"✅ 完成\n")
-        else:
-            print(f"❌ 失败\n")
-
-    # 4. 统计结果
     print("=" * 50)
     print(f"🎉 处理完成!")
+    print(f"📊 总计: {processed_count} 张")
     print(f"✅ 成功: {success_count} 张")
-    print(f"❌ 失败: {total - success_count} 张")
+    print(f"❌ 失败: {failed_count} 张")
     print(f"📁 输出目录: {OUTPUT_FOLDER}")
 
 # === 主程序入口 ===
