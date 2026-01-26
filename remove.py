@@ -14,6 +14,10 @@ OUTPUT_FOLDER = "./output"
 MODEL_NAME = "lama" # AI 模型名称
 DEVICE = "mps" # mac M芯片使用 mps, 其他使用 cuda 或 cpu
 
+# 调试文件输出配置
+SAVE_MASK = False      # 是否保存 _mask.png 文件（水印检测区域）
+SAVE_PREVIEW = False   # 是否保存 _preview.png 文件（红色标记预览图）
+
 # === 函数定义 ===
 def init_model():
   print("正在加载AI模型...")
@@ -289,24 +293,26 @@ def remove_watermark(model, image_path, output_path, use_template=False):
     print(f"  ✅ 最终 Mask 尺寸: {mask_image.size}")
 
     # 保存 mask 用于调试
-    mask_debug_path = str(output_path).replace('.jpg', '_mask.png').replace('.png', '_mask.png').replace('.jpeg', '_mask.png')
-    mask_image.save(mask_debug_path)
-    print(f"  💾 Mask 已保存到: {mask_debug_path}")
+    if SAVE_MASK:
+      mask_debug_path = str(output_path).replace('.jpg', '_mask.png').replace('.png', '_mask.png').replace('.jpeg', '_mask.png')
+      mask_image.save(mask_debug_path)
+      print(f"  💾 Mask 已保存到: {mask_debug_path}")
 
     # 创建可视化图片：将 mask 叠加到原图上（红色标记）
-    preview_path = str(output_path).replace('.jpg', '_preview.png').replace('.png', '_preview.png').replace('.jpeg', '_preview.png')
-    preview_img = img.copy()
-    preview_array = np.array(preview_img)
-    mask_array_preview = np.array(mask_image)
+    if SAVE_PREVIEW:
+      preview_path = str(output_path).replace('.jpg', '_preview.png').replace('.png', '_preview.png').replace('.jpeg', '_preview.png')
+      preview_img = img.copy()
+      preview_array = np.array(preview_img)
+      mask_array_preview = np.array(mask_image)
 
-    # 将 mask 区域标记为红色半透明
-    preview_array[mask_array_preview > 0] = (
-      preview_array[mask_array_preview > 0] * 0.5 +
-      np.array([255, 0, 0]) * 0.5
-    ).astype(np.uint8)
+      # 将 mask 区域标记为红色半透明
+      preview_array[mask_array_preview > 0] = (
+        preview_array[mask_array_preview > 0] * 0.5 +
+        np.array([255, 0, 0]) * 0.5
+      ).astype(np.uint8)
 
-    Image.fromarray(preview_array).save(preview_path)
-    print(f"  👁️  预览图已保存到: {preview_path}")
+      Image.fromarray(preview_array).save(preview_path)
+      print(f"  👁️  预览图已保存到: {preview_path}")
 
     # 关键修复：iopaint 模型需要 numpy 数组，不是 PIL Image！
     # 将 PIL Image 转换为 numpy 数组
