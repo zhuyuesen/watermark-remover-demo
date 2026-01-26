@@ -44,6 +44,7 @@ def cleanup_duplicate_files(directory, dry_run=False):
 
                 if dry_run:
                     print(f"[预览] 将删除: {file_path} ({file_size / 1024:.2f} KB)")
+                    deleted_count += 1
                 else:
                     try:
                         file_path.unlink()

@@ -1,5 +1,8 @@
 # 批量移除水印
 
+前提：
+多张图片的水印位置、角度一致，使用 https://www.robots.ox.ac.uk/~vgg/software/via/via.html 标注出水印位置，使用mac自带图片软件导出水印大概图片
+
 ## 环境配置
 
 ### 1. 安装 Python
