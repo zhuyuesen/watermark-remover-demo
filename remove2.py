@@ -12,11 +12,10 @@ from pathlib import Path
 INPUT_FOLDER = "./input"
 OUTPUT_FOLDER = "./output"
 MODEL_NAME = "lama"
-DEVICE = "mps"  # mac M芯片使用 mps, 其他使用 cuda 或 cpu
+DEVICE = "cpu"  # Windows 使用 cpu，Mac M芯片使用 mps，有 Nvidia GPU 使用 cuda
 
 TARGET_SIZE = (500, 352)  # 目标图片分辨率 (宽, 高)
 
-TEMPLATE_DIR = "./template2"
 POSITIONS_FILE = "./template2/watermark_positions.txt"
 
 # 调试文件输出配置
@@ -82,7 +81,7 @@ def build_mask(image_shape, positions):
 
 def remove_watermark(model, image_path, output_path, positions):
     """
-    对单张图片去除水印
+    对单张图片去除水印（使用 lama AI 模型）
     """
     try:
         img = Image.open(image_path).convert('RGB')

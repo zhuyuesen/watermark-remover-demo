@@ -6,6 +6,11 @@
 2. 使用 convert_via_to_positions.py 把上述文件转为 template/watermark_positions.txt
 3. 使用mac自带图片软件导出水印大概图片 到 template/watermark.png
 4. 使用 remove.py 批量移除水印
+5. 使用mac预览软件导出水印图片可能会失败，可使用 GIMP 软件操作。步骤:
+    - 用模糊选择工具选中水印
+    - 复制选区：Edit > Copy（Command+C）  
+    - 粘贴为新图像：Edit > Paste as > New Image（粘贴为新图像）
+    - 然后 File > Export As 导出保存为 PNG/JPG
 
 ## 环境配置
 
@@ -79,3 +84,9 @@ remove.py 是现有已完成的水印移除脚本。
 已知A类图片每张图片上只有2个水印，水印1对应wm01.png 水印2对应wm02.png
 现在我在template2/watermark_positions.txt中记录了2个水印的位置，位置1对应wm01.png 位置2对应wm02.png
 新建一个脚本，从配置参数的输入目录中查找分辨率为500*352的图片并根据位置和水印尝试移除水印并保存到输出目录
+
+## 运行 remove2.py 步骤
+要用 3.11 的 pip
+1. py -3.11 -m pip install --upgrade iopaint diffusers transformers huggingface_hub
+
+2. py -3.11 .\remove2.py
