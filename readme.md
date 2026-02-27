@@ -1,7 +1,11 @@
 # 批量移除水印
 
 前提：
-多张图片的水印位置、角度一致，使用 https://www.robots.ox.ac.uk/~vgg/software/via/via.html 标注出水印位置，使用mac自带图片软件导出水印大概图片
+多张图片的水印位置、角度一致:
+1. 使用 https://www.robots.ox.ac.uk/~vgg/software/via/via.html 标注出水印位置，左上角 Annotation -> Export Annotations (as json) 保存水印位置文件到项目
+2. 使用 convert_via_to_positions.py 把上述文件转为 template/watermark_positions.txt
+3. 使用mac自带图片软件导出水印大概图片 到 template/watermark.png
+4. 使用 remove.py 批量移除水印
 
 ## 环境配置
 
@@ -68,3 +72,10 @@ INPUT_FOLDER = "D:/imgs/chuanxunwang"
 `python cleanup_duplicates.py . --confirm`
 
 `/path/to/directory` 为路径，如 `C:\watermark-remover\output`
+
+claude命令: 移除水印2
+remove.py 是现有已完成的水印移除脚本。
+但是现在发现新的需求: 有一些分辨率为500*352的图片(类型A)的水印与其他图片是不一样的，导致使用remove.py移除水印失败
+已知A类图片每张图片上只有2个水印，水印1对应wm01.png 水印2对应wm02.png
+现在我在template2/watermark_positions.txt中记录了2个水印的位置，位置1对应wm01.png 位置2对应wm02.png
+新建一个脚本，从配置参数的输入目录中查找分辨率为500*352的图片并根据位置和水印尝试移除水印并保存到输出目录

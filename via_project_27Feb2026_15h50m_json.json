@@ -1,0 +1,29 @@
+{
+  "412570890_1.jpg42308": {
+    "filename": "412570890_1.jpg",
+    "size": 42308,
+    "regions": [
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 7,
+          "y": 321,
+          "width": 90,
+          "height": 26
+        },
+        "region_attributes": {}
+      },
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 401,
+          "y": 312,
+          "width": 93,
+          "height": 36
+        },
+        "region_attributes": {}
+      }
+    ],
+    "file_attributes": {}
+  }
+}
