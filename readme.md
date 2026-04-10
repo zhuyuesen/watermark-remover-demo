@@ -90,3 +90,12 @@ remove.py 是现有已完成的水印移除脚本。
 1. py -3.11 -m pip install --upgrade iopaint diffusers transformers huggingface_hub
 
 2. py -3.11 .\remove2.py
+
+
+remove.py和remove2.py是现有2个版本的水印移除工具
+现有新的水印移除需求：
+现在有一种水印图片：左下角有2行水印：第一行是所有图片相同的一个公司名的文字，第二行是各自摄影师的名字。这种水印如何去除
+已知2行水印的开始位置都相同、第二行文字不一样所以宽度也不一样
+我已把第一行的水印和位置保存到template3
+
+现在已知需要这么处理的图片的分辨率宽都是800，增加这个限制以加速处理图片

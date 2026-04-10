@@ -49,11 +49,11 @@ def convert_via_to_positions(via_json_path, output_path):
     return len(all_positions)
 
 if __name__ == "__main__":
-    via_json = "./via_project_7Jan2026_10h26m_json.json"
-    output = "./template/watermark_positions.txt"
+    via_json = "./via_project_10Apr2026_10h56m_json.json"
+    output = "./template3/watermark_positions.txt"
 
     # 确保 template 目录存在
-    Path("./template").mkdir(exist_ok=True)
+    Path("./template3").mkdir(exist_ok=True)
 
     count = convert_via_to_positions(via_json, output)
 

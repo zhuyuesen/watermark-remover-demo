@@ -1,0 +1,19 @@
+{
+  "205778000_3.jpg55092": {
+    "filename": "205778000_3.jpg",
+    "size": 55092,
+    "regions": [
+      {
+        "shape_attributes": {
+          "name": "rect",
+          "x": 8,
+          "y": 473,
+          "width": 164,
+          "height": 25
+        },
+        "region_attributes": {}
+      }
+    ],
+    "file_attributes": {}
+  }
+}
