@@ -194,8 +194,6 @@ def batch_process():
     print(f"📍 第一行水印位置: x={x1}, y={y1}, w={w1}, h={h1}")
     print(f"📍 第二行扫描起点: x={x1}, y={y1 + h1}，最大宽度: {ROW2_MAX_WIDTH}px\n")
 
-    model = init_model()
-
     input_path = Path(INPUT_FOLDER)
     output_path = Path(OUTPUT_FOLDER)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -209,28 +207,32 @@ def batch_process():
     candidates = sorted(set(candidates))
     print(f"🔍 共找到 {len(candidates)} 张图片，筛选宽度 = {TARGET_WIDTH}px\n")
 
+    model = None
     success_count = 0
     failed_count = 0
     skipped_count = 0
-    matched = []
+    matched_count = 0
 
     for img_file in candidates:
         try:
             with Image.open(img_file) as probe:
                 w, _ = probe.size
-            if w == TARGET_WIDTH:
-                matched.append(img_file)
-            else:
-                skipped_count += 1
         except Exception as e:
             print(f"⚠️  无法读取: {img_file.name} — {e}")
             skipped_count += 1
+            continue
 
-    print(f"🎯 匹配宽度 {TARGET_WIDTH}px: {len(matched)} 张，跳过: {skipped_count} 张\n")
+        if w != TARGET_WIDTH:
+            skipped_count += 1
+            continue
 
-    for i, img_file in enumerate(matched, 1):
+        matched_count += 1
+
+        if model is None:
+            model = init_model()
+
         relative_path = img_file.relative_to(input_path)
-        print(f"[{i}/{len(matched)}] 处理: {relative_path}")
+        print(f"[#{matched_count}] 处理: {relative_path}")
 
         output_file = output_path / relative_path
         output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -246,7 +248,7 @@ def batch_process():
 
     print("=" * 50)
     print(f"🎉 处理完成!")
-    print(f"🎯 匹配: {len(matched)} 张")
+    print(f"🎯 匹配: {matched_count} 张")
     print(f"✅ 成功: {success_count} 张")
     print(f"❌ 失败: {failed_count} 张")
     print(f"⏭️  跳过 (宽度不符): {skipped_count} 张")

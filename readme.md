@@ -91,6 +91,10 @@ remove.py 是现有已完成的水印移除脚本。
 
 2. py -3.11 .\remove2.py
 
+## 平台区别
+windows 运行用 py -3.11 .\remove3.py
+mac 用  python3 remove3.py
+
 
 remove.py和remove2.py是现有2个版本的水印移除工具
 现有新的水印移除需求：
