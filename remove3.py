@@ -18,6 +18,7 @@ DEVICE = "mps"  # mac M芯片使用 mps，其他使用 cuda 或 cpu
 POSITIONS_FILE = "./template3/watermark_positions.txt"
 
 TARGET_WIDTH = 800  # 只处理宽度为 800px 的图片
+FILTER_BY_WIDTH = True  # 设为 False 则处理所有图片，忽略 TARGET_WIDTH
 
 # 第二行检测参数
 ROW2_HEIGHT = 25        # 第二行水印高度（像素），与第一行相同
@@ -221,7 +222,7 @@ def batch_process():
             skipped_count += 1
             continue
 
-        if w != TARGET_WIDTH:
+        if FILTER_BY_WIDTH and w != TARGET_WIDTH:
             skipped_count += 1
             continue
 
@@ -250,7 +251,7 @@ def batch_process():
     print(f"🎯 匹配: {matched_count} 张")
     print(f"✅ 成功: {success_count} 张")
     print(f"❌ 失败: {failed_count} 张")
-    print(f"⏭️  跳过 (宽度不符): {skipped_count} 张")
+    print(f"⏭️  跳过: {skipped_count} 张")
     print(f"📁 输出目录: {OUTPUT_FOLDER}")
 
 
