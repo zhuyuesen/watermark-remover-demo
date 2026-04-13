@@ -201,8 +201,7 @@ def batch_process():
     image_extensions = ['*.jpg', '*.jpeg', '*.png']
     candidates = []
     for ext in image_extensions:
-        candidates.extend(input_path.glob(ext))
-        candidates.extend(input_path.glob(f'*/{ext}'))
+        candidates.extend(input_path.glob(f'**/{ext}'))
 
     candidates = sorted(set(candidates))
     print(f"🔍 共找到 {len(candidates)} 张图片，筛选宽度 = {TARGET_WIDTH}px\n")
